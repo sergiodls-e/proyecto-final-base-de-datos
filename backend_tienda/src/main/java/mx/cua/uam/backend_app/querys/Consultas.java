@@ -13,6 +13,7 @@ public class Consultas {
     public void productosDisponibles(){
         cc.executeStatement("""
                 SELECT 
+                p.id_producto ID_Producto,
                 c.nombre Categoria,
                 p.nombre Producto, 
                 p.precio Precio, 
