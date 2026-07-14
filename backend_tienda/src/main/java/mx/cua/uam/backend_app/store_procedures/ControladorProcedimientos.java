@@ -84,12 +84,18 @@ public class ControladorProcedimientos {
         try {
             // Se prepara la llamada al procedimiento almacenado
             sentencia = conexion.getConexion().prepareCall(spCall);
+
+            if (params != null) {
+                for (int i = 0; i < params.length; i++) {
+                    sentencia.setObject(i + 1, params[i]);
+                }
+            }
             
             // execute() devuelve true si el procedimiento retorna un ResultSet (filas)
             // devuelve false si es una actualización (INSERT, UPDATE, DELETE) o no devuelve nada.
             boolean hasResults = sentencia.execute();
             
-            if (hasResults) {
+            if (hasResults && params != null) {
                 resultado = sentencia.getResultSet();
                 ResultSetMetaData rsmd = resultado.getMetaData();
                 int columsNumber = rsmd.getColumnCount();
